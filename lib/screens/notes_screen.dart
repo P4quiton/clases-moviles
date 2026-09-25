@@ -25,7 +25,12 @@ class _NotesScreenState extends State<NotesScreen> {
         future: notesDB!.SELECT(), 
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return Center(child: Text('Si trae datos'));
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index){
+                return Text(snapshot.data![index].title!);
+              },
+            );
           }else{
             if( snapshot.hasError ){
               return Text(snapshot.error.toString());
@@ -37,7 +42,11 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.note),
-        onPressed: ()=> Navigator.pushNamed(context, "/add")
+        onPressed: ()=> Navigator.pushNamed(context, "/add").then((value) {
+          setState(() {
+            
+          });
+        },)
       ),
     );
   }
